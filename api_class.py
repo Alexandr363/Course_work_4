@@ -19,11 +19,11 @@ class GetApi(ABC):
 class HeadHunterAPI(GetApi):
     """Класс для получения вакансий с Head Hunter"""
 
-    def get_vacancies(self, search_phrase: str, count: int):
-        """Запрашиваем вакансии с Super Job"""
+    def get_vacancies(self, search_phrase: str, count: str):
+        """Запрашиваем вакансии с Head Hunter"""
         url = 'https://api.hh.ru/vacancies'
         response = requests.get(url, params={'text': search_phrase,
-                                             'page': 10, 'per_page': count})
+                                             'per_page': count})
         if response.status_code == 200:
             return response.json()
 
@@ -56,7 +56,7 @@ class HeadHunterAPI(GetApi):
 class SuperJobAPI(GetApi):
     """Класс для получения вакансий с Super Job"""
 
-    def get_vacancies(self, search_phrase: str, count: int):
+    def get_vacancies(self, search_phrase: str, count: str):
         """Запрашиваем вакансии с Head Hunter"""
 
         api_key: str = os.getenv('SJ_API_KEY')
