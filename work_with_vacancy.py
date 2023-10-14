@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import json
+from pathlib import Path
 
 
 class WorkVacancy(ABC):
@@ -21,28 +22,45 @@ class WorkVacancy(ABC):
 class AddLoadGet(WorkVacancy):
     """Класс для сохранения, загрузки, запроса вакансий"""
 
-    def save_vacancy(self, id_vac):
+    USER_PATH = "user.json"
 
+    def __new__(cls, *args, **kwargs):
+        """Создание файла для выборки пользователя
+        по вакансиям, если файл не существует."""
+        if not Path(cls.USER_PATH).resolve().exists():
+            with open(cls.USER_PATH, "w"):
+                pass
+        return super().__new__(cls)
+
+    def save_vacancy(self, id_vac):
         with open('data.json', encoding='utf-8') as d:
             data_dict = json.load(d)
 
-        with open('user.json', encoding='utf-8') as u:
-            user_dict = json.load(u)
+        with open(self.USER_PATH, encoding='utf-8') as u:
+            try:
+                user_dict = json.load(u)
+            except json.decoder.JSONDecodeError:
+                user_dict = {}
 
-        with open('user.json', 'w', encoding='utf-8') as u:
+        with open(self.USER_PATH, 'w', encoding='utf-8') as u:
             json.dump(user_dict | {id_vac: data_dict[id_vac]}, u, indent=2,
                       ensure_ascii=False)
 
     def delete_vacancy(self, id_vac):
 
-        with open('user.json', encoding='utf-8') as f:
+        with open(self.USER_PATH, encoding='utf-8') as f:
             data = json.load(f)
-            del data[id_vac]
+            try:
+                del data[id_vac]
+                print("Вакансия удалена")
+            except KeyError:
+                print("Такой вакансии нет")
+                pass
 
-        with open('user.json', 'w', encoding='utf-8') as f:
+        with open(self.USER_PATH, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
     def get_vacancy(self, id_vac):
-        with open('user.json', 'r', encoding='utf-8') as f:
+        with open(self.USER_PATH, 'r', encoding='utf-8') as f:
             data = json.load(f)
             print(data[id_vac])

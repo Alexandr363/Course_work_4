@@ -15,21 +15,21 @@ def user_input():
     while True:
         website = input('Введите, с какого сайта искать вакансии: '
                         '(число от 1 до 3) \n')
-        if str.isdigit(website):
+        if website.isdigit():
             if 4 > int(website) > 0:
                 break
 
     while True:
         vacancy_count = input('Введите количество вакансий для поиска: '
                               '(число от 1 до 99) \n')
-        if str.isdigit(vacancy_count):
+        if vacancy_count.isdigit():
             if 100 > int(vacancy_count) > 0:
                 break
 
     while True:
         search_phrase = input('Введите ключевое слово для поиска: '
                               '(без цифр) \n')
-        if str.isalpha(search_phrase):
+        if search_phrase.isalpha():
             break
 
     if int(website) == 1:
