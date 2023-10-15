@@ -13,4 +13,3 @@ class Vacancy:
                 f"- Зарплата: {self.salary}\n"
                 f"- Ссылка на вакансию: {self.link}\n"
                 f"- ID вакансии: {self.id_vac}\n")
-

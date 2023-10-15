@@ -39,7 +39,3 @@ def good_view_2(data: list):
         print(i, 60 * '*')
         print(dat)
         i += 1
-
-
-def new():
-    pass
