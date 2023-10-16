@@ -1,3 +1,5 @@
+import json
+
 from work_with_vacancy import AddLoadGet
 
 
@@ -18,11 +20,20 @@ def save_load_get():
             break
         else:
             if user_input == 1:
-                vac_id = input('Введите id вакансии:  ')
-                action.save_vacancy(vac_id)
+                try:
+                    vac_id = input('Введите id вакансии: ')
+                    action.save_vacancy(vac_id)
+                except KeyError:
+                    print('Вы неверно ввели ID вакансии')
             if user_input == 2:
-                vac_id = input('Введите id вакансии:  ')
-                action.delete_vacancy(vac_id)
+                try:
+                    vac_id = input('Введите id вакансии: ')
+                    action.delete_vacancy(vac_id)
+                except json.decoder.JSONDecodeError:
+                    print('Вы неверно ввели ID вакансии')
             if user_input == 3:
-                vac_id = input('Введите id вакансии:  ')
-                action.get_vacancy(vac_id)
+                try:
+                    vac_id = input('Введите id вакансии: ')
+                    action.get_vacancy(vac_id)
+                except KeyError:
+                    print('Вы неверно ввели ID вакансии')
