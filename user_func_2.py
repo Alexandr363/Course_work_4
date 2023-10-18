@@ -35,5 +35,7 @@ def save_load_get():
                 try:
                     vac_id = input('Введите id вакансии: ')
                     action.get_vacancy(vac_id)
+                except json.decoder.JSONDecodeError:
+                    print('Вы неверно ввели ID вакансии')
                 except KeyError:
                     print('Вы неверно ввели ID вакансии')
